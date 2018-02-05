@@ -1,0 +1,217 @@
+/* CSS overrides of w3.css for hyland-wood.org */
+
+a:hover {
+     color:#3f51b5!important; /* indigo */
+}
+
+h1 {
+    font-family:serif;
+    font-size: 27px;
+    color: #666!important;
+}
+
+h2 {
+    font-family:serif;
+    font-size: 16px;
+    color: #999!important;
+    padding-top: none;
+}
+
+h3 {
+    width: 100%;
+    font-family:serif;
+    color: #666!important;
+}
+
+h1 a { 
+   text-decoration: none;
+   color: #666!important;
+}
+
+h1 a:hover {
+    font-size: 29px;
+}
+
+.hy-store {
+    width: 70%;
+    text-align: center;
+    font-weight: 400;
+    font-family:sans-serif;
+    font-size: 14px;
+    color: #999!important;
+    position: relative;
+    display: block;
+    letter-spacing: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    z-index: 1
+}
+.hy-store a { 
+   text-decoration: none;
+}
+.hy-store a:hover {
+     text-decoration: underline;
+     color:#668A52!important;
+     font-size: 16px;
+}
+
+h1,h2,h3,h4,h5,h6{font-family:"Segoe UI",Arial,sans-serif;font-weight:400;margin:10px 0;}
+
+.hy-padding{
+    padding:8px 16px!important
+}
+
+.hy-page {
+    padding: 16px;
+}
+
+.hy-center {
+    text-align:center!important
+}
+
+.hy-left {
+    width: 100%;
+    float: center;
+}
+
+@media all and (min-width: 1000px) {
+    
+    .hy-left {
+        width: 50%;
+        float: left;
+    }
+
+}
+
+
+.hy-right {
+    text-align:center!important
+}
+
+div.hy-center iframe{
+    margin:0 auto !important;
+    display:block;
+}
+
+div.hy-right iframe{
+    margin:0 auto !important;
+    display:block;
+}
+
+.hy-container {
+    padding:0.01em 16px;
+}
+
+.hy-docheader {
+    text-align: center;
+    text-decoration: none;
+    padding-bottom: 11px;
+}
+
+.hy-menu {
+    width: 70%;
+    text-align: center;
+    font-weight: 400;
+    font-family:sans-serif;
+    font-size: 11px;
+    color: #999!important;
+    text-transform: uppercase;
+    position: relative;
+    display: block;
+    letter-spacing: 1px;
+    margin-top: 11px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top:32px;
+    padding-bottom:32px;
+    border-top: 3px solid #eee;
+    border-bottom: 3px solid #eee;
+    z-index: 1
+}
+.hy-menu a { 
+   text-decoration: none;
+   color: #666!important;
+}
+.hy-menu a:hover {
+     text-decoration: underline;
+     color:#668A52!important;
+     font-size: 13px;
+}
+
+.hy-bookholder-top {
+	display: table;
+	margin: 0 auto;
+}
+
+.hy-bookholder {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center;
+    float: center;
+}
+
+.hy-bookholder img { 
+    height: auto;		
+	max-height: 250px;
+    max-width: 30%;
+}
+
+.hy-bookcard {
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
+}
+
+.hy-bookcard:hover {
+    box-shadow: 0 12px 30px 0 rgba(0,0,0,0.2),0 16px 40px 0 rgba(0,0,0,0.19);
+}
+
+.hy-footer {
+    width: 70%;
+    text-align: center;
+    font-weight: 400;
+    font-family:sans-serif;
+    font-size: 11px;
+    color: #999!important;
+    position: relative;
+    display: block;
+    letter-spacing: 1px;
+    margin-top: 11px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top:32px;
+    padding-bottom:32px;
+    border-top: 3px solid #eee;
+    z-index: 1
+}
+
+.hy-social-button {
+    border:none;
+    display:inline-block;
+    outline:0;
+    padding:8px 16px;
+    vertical-align:middle;
+    overflow:hidden;
+    text-decoration:none;
+    color:inherit;
+    background-color:inherit;
+    text-align:center;
+    cursor:pointer;
+    white-space:nowrap;
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    -khtml-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+    color:#000!important;
+    background-color:#f1f1f1!important;
+    font-size:12px!important;
+}
+
+.hy-social-button:hover {
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
+}
