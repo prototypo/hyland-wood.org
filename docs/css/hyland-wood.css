@@ -76,6 +76,16 @@ h1,h2,h3,h4,h5,h6{font-family:"Segoe UI",Arial,sans-serif;font-weight:400;margin
     float: center;
 }
 
+.hy-headshot {
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 150px;
+    max-width: 100%;
+    height: auto;
+}
+
 @media all and (min-width: 1000px) {
     
     .hy-left {
