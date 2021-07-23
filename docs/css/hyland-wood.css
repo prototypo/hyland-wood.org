@@ -188,7 +188,7 @@ div.hy-right iframe{
     font-size: 11px;
     color: #999!important;
     position: relative;
-    display: block;
+    display: inline-block;
     letter-spacing: 1px;
     margin-top: 11px;
     margin-left: auto;
@@ -196,7 +196,7 @@ div.hy-right iframe{
     padding-top:32px;
     padding-bottom:32px;
     border-top: 3px solid #eee;
-    /* z-index: 1 */
+    z-index: 1
 }
 
 .hy-social-button {
