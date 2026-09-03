@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Partner with AI to Write Quality Code</title>
+<meta name="description" content="How I build software with Claude: a pipeline of narrow agents, a pass that deletes what should never have existed, and a ranked report that helps humans clean up AI slop.">
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #fbfaf8;
+    --fg: #23201d;
+    --muted: #6b645d;
+    --rule: #e2ddd6;
+    --link: #9a5b2c;
+    --code-bg: #f0ece6;
+    --panel: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #171614;
+      --fg: #e7e3dd;
+      --muted: #a49c93;
+      --rule: #322e2a;
+      --link: #e0a375;
+      --code-bg: #23211e;
+      --panel: #1e1c1a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 17px/1.65 Charter, Georgia, "Times New Roman", serif;
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap { max-width: 44rem; margin: 0 auto; padding: 3.5rem 1.25rem 5rem; }
+  h1 {
+    font-size: clamp(1.9rem, 5vw, 2.6rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0 0 1rem;
+  }
+  h2 {
+    font-size: 1.45rem;
+    line-height: 1.25;
+    margin: 2.8rem 0 0.8rem;
+    letter-spacing: -0.01em;
+  }
+  h3 { font-size: 1.15rem; margin: 2rem 0 0.6rem; }
+  .byline {
+    margin: 0 0 1.4rem;
+    font-size: 1rem;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  .standfirst {
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--muted);
+    margin: 0 0 2.2rem;
+  }
+  p, li { margin: 0 0 1.1rem; }
+  ul { padding-left: 1.3rem; }
+  a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
+  hr { border: 0; border-top: 1px solid var(--rule); margin: 2.8rem 0; }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.87em;
+    background: var(--code-bg);
+    padding: 0.12em 0.35em;
+    border-radius: 4px;
+  }
+  strong { font-weight: 700; }
+  figure { margin: 2rem 0; }
+  figcaption { margin-top: 0.8rem; font-size: 0.9rem; color: var(--muted); font-style: italic; }
+  .diagram {
+    overflow-x: auto;
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  .diagram pre { margin: 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    margin: 1.5rem 0;
+    display: block;
+    overflow-x: auto;
+  }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font-weight: 700; }
+  footer { margin-top: 3rem; color: var(--muted); font-style: italic; font-size: 0.95rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<article>
+
+<h1>Partner with AI to Write Quality Code</h1>
+
+<p class="byline">David Hyland-Wood</p>
+
+<p class="standfirst">How I build software with Claude: a pipeline of narrow agents, a pass that deletes what should never have existed, and a ranked report that helps humans clean up AI slop.</p>
+
+<p>A large language model can write two thousand plausible lines of code per minute. That is simultaneously a grand technological achievement and a way to automate yourself into a huge mess.</p>
+
+<p>Nobody reviews two thousand lines carefully. Anyone who says they do is either skimming or lying. Now try it with 100,000 lines. A colleague recently dropped 160,000 lines on me. I&rsquo;m just not going to review that.</p>
+
+<p>We know development can be done quickly, even amazingly quickly. That&rsquo;s the realm of AI. What you want and how you want it to look when it is done are still the domain of people. AI influencers will tell you all about those things, <a href="https://claude.com/blog/the-ai-native-sdlc-playbook">as has Anthropic</a>.</p>
+
+<p>There is another, and arguably more important, place for people in our use of strong AI to create software: It is up to us to tell the technology how to create good code.</p>
+
+<p>What do I mean by good code? I mean that it complies with a specification, that it has low cyclometric complexity, that I can read it if I need to, that it reuses functions instead of reimplementing near copies, that it is, in short, maintainable by whatever we will use in the future.</p>
+
+<hr>
+
+<h2>The workflow</h2>
+
+<figure class="diagram">
+<pre class="mermaid">
+flowchart TB
+  subgraph S1["STAGE 01 — Build under gates · claude-dev-pipeline"]
+    direction LR
+    P["Plan&lt;br/&gt;human-approved"] --> D["Developer&lt;br/&gt;writes code"]
+    D --> CR["Code review&lt;br/&gt;gate"]
+    CR --> SR["Security review&lt;br/&gt;gate · OWASP"]
+    SR --> T["Test + commit&lt;br/&gt;only committer"]
+    T --> DOC["Document&lt;br/&gt;on what shipped"]
+    CR -. "fail" .-> D
+    SR -. "fail" .-> D
+  end
+
+  subgraph S2["STAGE 02 — Delete what should not exist · ponytail"]
+    direction LR
+    PR["/ponytail-review&lt;br/&gt;the diff"] --> CUT["Cut&lt;br/&gt;dead code · duplication&lt;br/&gt;near-twin abstractions"]
+    PA["/ponytail-audit&lt;br/&gt;the whole repo"] --> CUT
+    CUT --> PD["/ponytail-debt&lt;br/&gt;ledger of shortcuts taken on purpose"]
+  end
+
+  subgraph S3["STAGE 03 — Measure, then let a human read · codequalityexplorer"]
+    direction LR
+    QR["/quality-report&lt;br/&gt;measures · never edits"] --> MD["CODE_QUALITY.md&lt;br/&gt;ranked worst-first"]
+    MD --> QI["/quality-improve&lt;br/&gt;one finding · test · stop"]
+    QI --> HR["Human review&lt;br/&gt;read the top of the list"]
+  end
+
+  S1 --> S2
+  S2 --> S3
+</pre>
+<figcaption>New findings from stage 03 become the next change, and the loop starts again at Plan. Output style, all three stages: every agent reports in ASD-STE100 Simplified Technical English.</figcaption>
+</figure>
+
+<hr>
+
+<p>I build in three stages:</p>
+
+<h2>Stage 01 &mdash; Build with gates</h2>
+
+<p>My <a href="https://github.com/prototypo/claude-dev-pipeline">Claude development pipeline</a> runs six agents with one job each. A project manager, developer, code reviewer, security reviewer, tester, and documenter. The constraints matter more than the roles.</p>
+
+<ul>
+  <li>The project manager orchestrates and <strong>never writes code</strong>.</li>
+  <li>The developer writes code and <strong>never commits</strong>.</li>
+  <li>Code review and security review (OWASP framing) are <strong>gates, not opinions</strong>. A FAIL routes the change straight back to the developer with findings, and it goes round again.</li>
+  <li>The tester is the <strong>only agent allowed to commit</strong>, and only once both gates pass and the suite is green.</li>
+  <li>The documenter runs last, against what actually shipped.</li>
+</ul>
+
+<p>I work the change out with Claude in plan mode, approve it, and only then hand it to the project manager.</p>
+
+<h3>Running alongside Matt Pocock&rsquo;s skills</h3>
+
+<p><a href="https://github.com/mattpocock/skills">Matt Pocock&rsquo;s skills</a> sit underneath and supply the engineering habits: test-driven development (TDD), domain modelling and deep-module design.</p>
+
+<p>I have come to especially appreciate the benefits of Matt&rsquo;s grillme skill. Grillme ensures that the LLM and I understand the task the same way before it starts coding.</p>
+
+<hr>
+
+<h2>Stage 02 &mdash; Delete what should never have existed</h2>
+
+<p>Models are generous in their output. If you ask for a function, you probably will get an interface, a factory and three helpers that are never called twice. None of that is helpful.</p>
+
+<p>Dietrich Gebert&rsquo;s <a href="https://github.com/DietrichGebert/ponytail">ponytail</a> is the cure for this behaviour. Does a piece of code need to exist at all? Is it already in the codebase? Does the standard library do it? Is there a native platform feature? Can it be one line? New code is only allowed as a last resort.</p>
+
+<ul>
+  <li><code>/ponytail-review</code> on the diff, before human review, to catch what this change just added.</li>
+  <li><code>/ponytail-audit</code> across the whole repo, periodically, for what has accumulated: dead code, duplicated blocks, and the one I care about most &mdash; <strong>near-twin abstractions</strong>, two utilities doing one job under different names, drifting slowly apart.</li>
+  <li><code>/ponytail-debt</code> collects the shortcuts the pipeline took on purpose, so &ldquo;we&rsquo;ll do that later&rdquo; is a list rather than a feeling.</li>
+</ul>
+
+<p>It also runs as a live mode during implementation, which is a great deal cheaper than deleting fluff afterward.</p>
+
+<hr>
+
+<h2>Stage 03 &mdash; Measure it, then let a human read the top of the list</h2>
+
+<p>My <a href="https://github.com/prototypo/codequalityexplorer">codequalityexplorer</a> ranks every finding worst-first into a CODE_QUALITY.md report, then fixes exactly one at a time. I cannot review everything the pipeline produced. I can review the worst things in it, and I know they are the worst because something measured them instead of sampling them.</p>
+
+<p><code>/quality-report</code> measures the codebase using old-fashioned software engineering concepts including cyclomatic complexity, function length, nesting depth, argument counts, duplicated blocks, dead code, error-handling smells (bare <code>except</code>, Rust <code>unwrap</code>, swallowed catches), oversized files, documentation and reusability &mdash; and writes <code>CODE_QUALITY.md</code>: every finding, ranked worst-first. It never edits code.</p>
+
+<p>Currently, Python, Rust, JavaScript and TypeScript are supported languages.</p>
+
+<p><code>/quality-improve</code> takes exactly one finding, the top open one, fixes it, runs the tests, and stops. That constraint is deliberate. Nobody wants a tool that promises to fix everything but hands me back an unreviewable diff, which is the problem I started with.</p>
+
+<p>The skill will ask you if you want to start a new branch for the improvements. Say yes.</p>
+
+<p>You run this command again to tackle the next finding.</p>
+
+<hr>
+
+<h2>Clean up Claude&rsquo;s English</h2>
+
+<p>A pipeline this size produces a lot of reports. Six agents, two gate verdicts, an over-engineering pass and a ranked quality file &mdash; all of it lands on me at the end of a long day. LLM prose makes that worse, especially with the newer Claude models.</p>
+
+<p>The easy solution is to set an output style and hold every agent to it. Mine is <strong>ELI5</strong> crossed with <strong>ASD-STE100 Simplified Technical English</strong> a limited vocabulary for technical reporting. It has a fixed approved vocabulary, one meaning per word, active voice, and one instruction or idea per sentence.</p>
+
+<ul>
+  <li><strong>Plain words only.</strong> If a technical term is unavoidable, it gets explained straight after.</li>
+  <li><strong>Active voice, short sentences, short paragraphs.</strong> No throat-clearing.</li>
+  <li><strong>Report the outcome:</strong> what was done, whether it worked, what I do next.</li>
+  <li><strong>Decisions come as two options, not five</strong> &mdash; with just enough context to choose, and a recommendation.</li>
+  <li><strong>Paths and commands stay exact.</strong> Simplification applies to the prose, never to an identifier.</li>
+</ul>
+
+<p>These are not cosmetic preferences. Ambiguous review findings are how a real problem gets waved through, and the discipline that keeps a maintenance manual unambiguous does the same job for a code review. It also makes the gates faster to read, which means I actually read them.</p>
+
+<hr>
+
+<h2>Let Claude clean itself</h2>
+
+<p>Every Claude upgrade changes what the model does well unaided, and scaffolding that helped last quarter can actively get in the way this quarter. You have probably seen Anthropic&rsquo;s guidance to delete your CLAUDE.md every quarter.</p>
+
+<p>I run <code>/doctor</code> once per month. Anthropic has improved that tool immensely so it is worth doing. It will guide you through the process of complying with their best practices.</p>
+
+<hr>
+
+<h2>Credits</h2>
+
+<table>
+  <thead>
+    <tr><th>Piece</th><th>Whose</th><th>What it does</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>claude-dev-pipeline</code></td><td>Mine</td><td>Development workflow with gates</td></tr>
+    <tr><td><code>codequalityexplorer</code></td><td>Mine</td><td>Code quality checks</td></tr>
+    <tr><td><code>ponytail</code></td><td>Dietrich Gebert&rsquo;s</td><td>Checks for duplication and dead code</td></tr>
+    <tr><td><code>mattpocock/skills</code></td><td>Matt Pocock&rsquo;s</td><td>Interviews and related process tooling</td></tr>
+  </tbody>
+</table>
+
+<p>The shape matters more than the parts. The process is <strong>generate under constraint, delete aggressively, measure honestly, report in plain English, and give the human a short ranked list instead of a long diff.</strong></p>
+
+<footer>Written and current as of September 2026</footer>
+
+</article>
+</div>
+
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+  const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+  mermaid.initialize({ startOnLoad: true, theme: dark ? "dark" : "neutral" });
+</script>
+</body>
+</html>
