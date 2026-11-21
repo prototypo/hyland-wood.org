@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en" class="page">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sources - The World in Motion</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <article class="prose">
+    <p><a href="./">Back to the map</a></p>
+    <h1>Sources and limits</h1>
+    <p>Every border on this map comes from a source. This page says where, what we changed, and what you should be careful about.</p>
+
+    <h2 id="cliopatria">Cliopatria</h2>
+    <p>The borders come from a dataset called <strong>Cliopatria</strong>, version v0.2.1. It was made for the Seshat Global History Databank.</p>
+    <ul>
+      <li>Repository: <a href="https://github.com/Seshat-Global-History-Databank/cliopatria" rel="noopener">Cliopatria on GitHub</a></li>
+      <li>Paper: <a href="https://doi.org/10.1038/s41597-025-04516-9" rel="noopener">doi:10.1038/s41597-025-04516-9</a></li>
+      <li>Licence: <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>. We changed the data, as described below.</li>
+    </ul>
+
+    <h2>What this site changed</h2>
+    <ul>
+      <li>Shapes are simplified so the map loads fast.</li>
+      <li>Relations between polities are left out.</li>
+      <li>When a big empire has smaller members, we show the empire and hide the members.</li>
+      <li>Year 0 is read as 1 BCE. There is no year 0.</li>
+      <li>Where the data has no border for a polity for some years, and control of the area was contested in those years (a revolution, a civil war, a withdrawal of authority), we keep the polity's last known border for those years. We call this a fill. A fill never replaces years the data covers. Holes with any other cause stay blank.</li>
+      <li>Cliopatria is the base of this map. Every difference from it (a simple name, a correction, a fill, a dispute note, a line-style change) is written down as a case in the <code>editorial/cases/</code> folder. <a href="cases.html">Open the list of cases</a>. Each entry there names its source. A case is used only after it has been approved, and each case lists checks that the map must pass.</li>
+      <li id="shores">One difference is not a case but a rule for all the data: the <strong>shore rule</strong>. Cliopatria draws its own shores, and they are rough. Most sea coasts lie about 10 km out in the sea, and some shores stop short of the water. This map takes its land, lakes and seas from Natural Earth, which is surveyed. So the rule makes every border meet the water:
+        <ul>
+          <li>The part of a polity that lies in the sea is cut off. The part that lies in a lake is cut off too, unless the polity covers half of that lake or more.</li>
+          <li>Narrow land by the water that no polity holds goes to the polity that it touches. Narrow means less than about 40 km wide. The land must be within about 50 km of the water and within about 100 km of the polity. Where two polities can take the same land, each gets the part that is nearer to it.</li>
+          <li>A small island (up to about 2,000 km²) that no polity holds goes to the nearest polity, if that polity is within about 50 km. For a border that starts in 1946 or later, the limit is about 100 km.</li>
+          <li>Wide land that no polity holds stays blank. A polity does not grow along a coast that nobody holds.</li>
+          <li>An approved case wins over the rule. Land that a case cleared, and that no other polity holds, stays blank.</li>
+          <li>A case can name a small box (at most 1 degree on a side) where the data has a hole that is not real: for example, the data draws a lake off its place. Blank land in that box goes to the polities that it touches, also where it is wide or not at the water. This is done only where polities and water close the blank land in. Blank land that runs on into wide blank land outside the box stays blank.</li>
+          <li>A lake that a case draws with different shapes for different years, such as the Aral Sea, is water for a border shape only when the lake has one shape in all the years of that border shape. Where the lake changes in those years, the border does not follow the shore; a case says what the land is.</li>
+          <li>Limits of the rule. It looks at each border shape once, for all the years of that shape, together with every other shape that shares a year with it. So beside a neighbour that exists in only some of those years, a short piece of shore can stay blank in the other years. The distances are 0.2, 0.5 and 1 degree, so in the far north they are shorter from east to west. An island that Natural Earth's land does not have is not drawn.</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h2 id="levels">Detail levels</h2>
+    <p>The tab “Details” at the left edge of the map opens a panel. In the panel, the switch “Detail” has three positions. The second tab of the panel, “Sources”, names the sources of the map.</p>
+    <ul>
+      <li><strong>Simple</strong> shows the land, the large lakes, and the borders and names of the year.</li>
+      <li><strong>More</strong> adds rivers and mountain ranges.</li>
+      <li><strong>Full</strong> adds ship lanes for the years 1750 to 2024, and some undersea cables. More content comes later.</li>
+    </ul>
+    <p>The rivers, the coasts and the lakes are those of today. Some of them moved or changed size in the years that this map covers. A lake or sea gets shapes for different years only when a <a href="cases.html">case</a> gives them.</p>
+
+    <h2 id="cables">Undersea cables</h2>
+    <p>At the level “Full” the map shows undersea cables: first telegraph cables, then telephone cables, then cables of glass fibre for the internet.</p>
+    <ul>
+      <li><strong>The map shows examples, not all cables.</strong> No free data set has the cables of all years with their dates. So we made a small set by hand, from the source that each cable names. In a year in which the map shows no cable in a sea, there can still have been a cable there.</li>
+      <li><strong>Each line is an estimate.</strong> It is drawn dashed. We know the landing places of a cable, but not its true path. The line is a smooth curve through the sea between the landing places.</li>
+      <li><strong>A line does not cross land.</strong> The build stops if a line crosses land away from the landing places. Small inlets are not on this map, so near a landing place a line can cross a short piece of land.</li>
+      <li><strong>The years.</strong> A cable shows from the year it started to the year it closed. A cable that is still in use shows up to the last year of the map.</li>
+      <li><strong>Five entries are routes, not one cable each:</strong> the Atlantic telegraph cables from Valentia Island to Heart's Content, 1866 to 1965 (six cables); the telegraph cables from Java to Darwin, 1871 to 1942 (two cables); the telegraph cables from Portugal to Brazil, 1874 to 1972; the telegraph cables from Aden to Durban, 1879 to 1968; and the telephone cables across the Strait of Dover, 1891 to 1996. No source that we found gives the last year of each cable. For the last three routes, the line stands for the cables on the route. The end year on the map is an estimate: it is the year before the next cable on the map came into use. The true end year is not known.</li>
+      <li>Every cable is in the <a href="cases.html">list of cases</a>, with its source and with what the entry leaves out.</li>
+    </ul>
+
+    <h2 id="lanes">Ship lanes</h2>
+    <p>At the level “Full” the map shows ship lanes: blue bands in the sea where many ships went. A band is a summary of many ships. It never shows the path of one ship.</p>
+    <ul>
+      <li><strong>The years.</strong> The map has ship lanes for 1750 to 2024, in nine periods. For a year in a period, the map shows the bands of that period. For the years before 1750 the map has no ship lane data, and the legend says so. We found no free data set that we can use for those years.</li>
+      <li><strong>1750 to 1824: logbooks of four countries.</strong> The periods are 1750 to 1774, 1775 to 1799, and 1800 to 1824. The bands come from <a href="#cliwoc">CLIWOC</a>: logbooks of British, Dutch, French and Spanish ships that are kept in archives. Ships of other countries are not in the data. So a sea with no band is not a sea with no ships. The Pacific Ocean and the seas of Asia have few bands or none in these years, but ships sailed there. The data has 1,365 voyages for the first period, 1,697 for the second and 631 for the third. Many more ships sailed.</li>
+      <li><strong>1825 to 2024: reports from ships of many countries.</strong> The periods are 1825 to 1854, 1855 to 1869, 1870 to 1913, 1914 to 1945, 1946 to 1979, and 1980 to 2024. A new period starts where the routes changed: the Suez Canal opened in 1869, and the Panama Canal in 1914. The bands come from <a href="#icoads">ICOADS</a>: reports of the weather that ships wrote down or sent, each with the position of the ship. The data has about 280,000 reports for the first of these periods and about 81 million for the last. A ship that made no report is not in the data. In the last years fewer ships send such reports, so the bands of 1980 to 2024 show the routes less well than a map made from the position senders of ships of today.</li>
+      <li><strong>How we made the bands.</strong> A program did all of it; no band is drawn by hand. It cuts the globe into squares: 1 degree for the logbooks, 2 degrees for the reports. For each period it counts the traffic in each square: the voyages that went through it, or the reports that came from it. For a voyage it joins two positions if they are 1 to 4 days apart and not more than about 500 km for each day; a longer step is an error in the logbook. A square with fewer than 3 voyages, or fewer than 10 reports, counts as empty: a few ships are not a lane. Then the program makes the traffic smooth, so that a band does not have the steps of the squares. The strong band is the busiest sea that holds 30% of all the traffic of the period. The middle band holds 60%, and the weak band 90%. Then the program makes the edge round, fills small holes, and leaves out small parts.</li>
+      <li><strong>Each band is an estimate.</strong> It has no line at its edge, because the edge is not exact. The squares are about 100 km or 200 km wide, and that sets how exact a band can be. A ship of the early years did not know its position well, most of all its longitude. A band near a coast can go a short way over a narrow piece of land, such as Panama.</li>
+      <li><strong>The two kinds of data are not the same measure.</strong> Do not compare the strength of a band before 1825 with one after it. In each period, a band shows only where the traffic of that period was most dense.</li>
+      <li>Click a band to read its period, its strength and its data.</li>
+    </ul>
+
+    <h2 id="topics">School topics</h2>
+    <p>The tab "Find" at the left edge of the map lists school topics. A click on a topic sends the map to the years and the place of the topic, and shows a short text.</p>
+    <ul>
+      <li>A topic is on a list when a public school document names it, or when the owner of this project asked for it. The <a href="cases.html">list of cases</a> says which, for each topic. It also gives the source of each text.</li>
+      <li>The United States has no national list of topics: each state makes its own. For the ages 10 to 14 we read the <a href="https://www.nysed.gov/sites/default/files/programs/standards-instruction/ss-framework-k-8a2.pdf" rel="noopener">New York State K-8 Social Studies Framework</a> (2017), the Texas Essential Knowledge and Skills for Social Studies, <a href="https://tea.texas.gov/laws-and-rules/sboe-rules-tac/sboe-tac-currently-effect/ch113a.pdf" rel="noopener">grade 5</a> and <a href="https://tea.texas.gov/laws-and-rules/sboe-rules-tac/sboe-tac-currently-effect/ch113b.pdf" rel="noopener">grade 8</a> (adopted 2022), and the <a href="https://www.nagb.gov/content/dam/nagb/en/documents/publications/frameworks/history/2018-history-framework.pdf" rel="noopener">NAEP U.S. History Framework</a> (2018). We did not read the documents of California and Florida yet.</li>
+      <li>For world history after about 1450 we read the <a href="https://www.nysed.gov/sites/default/files/programs/standards-instruction/framework-9-12-with-2017-updates.pdf" rel="noopener">New York State Grades 9-12 Social Studies Framework</a> (2017), grades 9 and 10. The pupils of those grades are 14 to 16 years old.</li>
+      <li>The search box also finds a topic by other names, for example "WW2" for the Second World War. These names are a help for the search only. The <a href="cases.html">list of cases</a> shows them for each topic.</li>
+      <li>Each text says only what its source says. So a text can be short, and it can leave out a part of the topic.</li>
+      <li>For some topics the source is an article of Wikipedia. Anyone can change a Wikipedia article, so the link goes to the exact version that we read. The text is in our own words.</li>
+      <li>A row of names above the timeline shows the topics that go on in the year of the timeline, the newest first. A click on a name shows the topic. Only topics that last more than one year show there. During play the row has one line: a name shows when the play reaches the first year of its topic, and it stays for a few seconds. When many topics start close together, only the newest names fit in that line.</li>
+      <li>The texts about the wars of today come from Wikipedia articles as they were in November 2026. Such texts get old fast. The link of each text goes to the version that we read.</li>
+      <li>The lists are not complete. A topic that is not on a list is not less important: for some topics we did not yet find a source that we could read and link.</li>
+      <li>The country whose list shows first is a guess, from the time zone and the language of your browser. The page does not send or keep the guess, and you can change the country. The world topics show for each country.</li>
+    </ul>
+
+    <h2 id="religion">The map "Religion" (detail level Full)</h2>
+    <p>At the detail level Full you can choose what the map shows. One choice is a religion. Then the map shades each country by the share of its people who have that religion: a darker blue is a larger share.</p>
+    <ul>
+      <li>The numbers come from the World Religion Project, national data, version 1.1: Zeev Maoz and Errol A. Henderson, 2013, “The World Religion Dataset, 1945-2010: Logic, Estimates, and Trends”, International Interactions 39: 265-291. The data is at <a href="https://correlatesofwar.org/data-sets/world-religion-data/" rel="noopener">correlatesofwar.org</a>.</li>
+      <li>The data has a count for each state for every fifth year, from 1945 to 2010. The map shows a count for its year and the four years after it. From 2011 the map shows the count of 2010. The legend says which count the map shows. Before 1945 the map has no count.</li>
+      <li>The numbers are estimates. The authors put them together from many sources, and they filled in years with no source.</li>
+      <li>The map does not show a “main religion”. Many countries are mixed. A click on a country lists its largest groups with their shares.</li>
+      <li>Grey means “no data”. It does not mean “none”. The data does not count the branches of Christianity and of Islam for each state and year; then a branch such as “Catholic” or “Sunni Islam” is grey there.</li>
+      <li>The data names states. The map has areas with other names. We gave each state a point in the middle of its country of today (from Natural Earth), and the area that holds that point in a year gets the count. Seven states that are gone, and three whose main land changed, got a point by hand.</li>
+      <li>The map data draws an empire and its colonies as one area. The count is for the home country only. So such an area gets no count while it has large colonies. In those years the map draws the home country (the United Kingdom, France, the Netherlands, Japan) with its area of today from Natural Earth, and gives it the count. Colonies have no count of their own in this data.</li>
+      <li>“Protestant” has the Anglicans in it. “Local religions” is what the data calls animist religions. “Mixed beliefs” is what the data calls syncretic religions.</li>
+    </ul>
+
+    <h2 id="slavery">The map "Slavery" (detail level Full)</h2>
+    <p>This map shows where there was slavery, and where a law had ended it. It goes back to the first records, more than 4,000 years ago. It is not complete, and it never will be: for most times and places nobody wrote down who was a slave. Grey means that our list has no entry for that area. It does not mean that there was no slavery.</p>
+    <ul>
+      <li>The map is made from a list of lands. The <a href="cases.html">list of cases</a> has the list, with a note and the source for each land.</li>
+      <li>One sort of entry is about a law: the year in which a law ended slavery in a land. These years come from the <a href="https://en.wikipedia.org/w/index.php?title=Timeline_of_abolition_of_slavery_and_serfdom&oldid=1386344340" rel="noopener">timeline of the abolition of slavery and serfdom</a> in Wikipedia. Such an entry holds from 1750, if it does not give an earlier year.</li>
+      <li>The other sort of entry is about a time: there was slavery in a land in a span of years. These entries come from nine articles of Wikipedia: History of slavery; Slavery in antiquity; Slavery in ancient Egypt; Slavery in ancient Greece; Slavery in ancient Rome; Slavery in Africa; Trans-Saharan slave trade; Red Sea slave trade; Indian Ocean slave trade. Each entry links the version that we read. Many of these years are not exact. Then the box of an area says “about”.</li>
+      <li>An entry has a point on the map, or it names areas of the map. With a point, the area that holds the point in a year gets the entry.</li>
+      <li>An area is “there was slavery in at least a part” in a year if at least one of its entries says so. An empire is one area with its colonies. So an empire stays in this class until the last of its lands ended slavery. So for some lands the map also draws the land by itself, from the year of its law. Examples are the United Kingdom, France, New Zealand and Jamaica. The land has its borders of today, but only the part that the map data has in that year: Australia has its west only from the year in which the map data has the west as British. The list of cases names each of these lands.</li>
+      <li>An area is “a law had ended slavery” when that is true for all its entries. The map is about the law here: in some lands slavery went on for many years after the law.</li>
+      <li>The list has no entry for Russia, where serfdom ended in 1861. It has few entries for the Americas before 1750, for India and for China after the Han dynasty.</li>
+      <li>A click on an area lists its entries with their years.</li>
+    </ul>
+
+    <h2>How to read the lines</h2>
+    <ul>
+      <li>A solid line means a surveyed border.</li>
+      <li>A dashed line means an estimate.</li>
+      <li>By default, borders from 1946 on are solid. Earlier borders are dashed.</li>
+      <li>Some borders are changed by hand in the editorial files. Those win over the default.</li>
+      <li>A hatched area means people disagree about that border. Click it to read the note and its source.</li>
+      <li>When only a part of a country is disputed, only that part is hatched. The shape of that part does not come from Cliopatria, so its edge is drawn as an estimate, and its popup links the source of the shape. Each hatched part has its own note. Click the part to read it.</li>
+      <li>A few disputes have no shape that we can draw. Then nothing is hatched, and the popup of the country has the note “Border dispute”.</li>
+      <li>A popup with the words “Gap in the data” means the data has no border for those years, and the owner of this project chose to show the last known border as an estimate.</li>
+      <li>Where Cliopatria draws a small area in a rough way, such as an island, a shape from another source can take its place. The case for that area names the source.</li>
+      <li>Where Cliopatria leaves land blank, a shape from another source can fill it. The popup of such a shape links that source in place of Cliopatria.</li>
+      <li>A brown dashed line in the sea is an undersea cable, and a brown dot is a place where it comes ashore. They show only at the level “Full”. Click the line to read about the cable. See <a href="#cables">Undersea cables</a>.</li>
+      <li>A blue band in the sea is a ship lane: many ships went there in that period. A darker band means more ships. The bands show only at the level “Full”, and only for the years 1750 to 2024. See <a href="#lanes">Ship lanes</a>.</li>
+      <li>A crosshatched area with a dashed line means the data has no border for those years, and control of the area was contested then. The last known border is shown. Click it to read why the area was contested and the source.</li>
+    </ul>
+
+    <h2>Limits</h2>
+    <ul>
+      <li>Old borders are reconstructions. Nobody drew them at the time.</li>
+      <li>The map shows one version of the truth. Other historians may disagree.</li>
+      <li>A border switches from one known shape to the next. We never guess what lies in between.</li>
+      <li>The timeline goes to 2026, but the map data ends in 2024. For 2025 and 2026 the map shows the borders of 2024, and a note at the timeline says so.</li>
+    </ul>
+    <p>The Cliopatria authors warn about the same things:</p>
+    <ul>
+      <li>The maps show only one version of the land that past polities held.</li>
+      <li>Border uncertainty is common. So are different views about names, land changes and how long a polity lasted.</li>
+      <li>You must decide for yourself if the data fits what you want to use it for.</li>
+    </ul>
+
+    <h2>Natural Earth</h2>
+    <p>The cities and towns in the search box also come from Natural Earth (populated places). They are places of today: a pin shows where the place is now, also in a year in which it was not there yet. The page does not send or keep the place that you search for, and the address of the page does not hold the pin.</p>
+    <p>Today's borders, the land shapes, the lakes, the rivers, the mountain ranges and the shapes of disputed areas come from <a href="https://www.naturalearthdata.com/" rel="noopener">Natural Earth</a>. It is in the public domain.</p>
+    <p>The switch “Today's borders” draws the borders of today on top of the map, as red lines. A dotted red line is a border that countries dispute today.</p>
+
+    <h2>Wikimedia Commons</h2>
+    <p>The areas of Ukraine held by Russia in 2022, 2023 and 2024 are traced from versions of the map <a href="https://commons.wikimedia.org/wiki/File:2022_Russian_invasion_of_Ukraine.svg" rel="noopener">2022 Russian invasion of Ukraine.svg</a> by Viewsridge and other Wikimedia Commons contributors. Its licence is <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>. We traced the area that the map marks as held by Russia, and we made the outline simpler. We share the three traced shapes under the same licence. They are in the <a href="cases.html#areas">list of shapes made for this map</a>, and each file names the exact version it comes from.</p>
+    <p>The hatched areas of eight more disputes are traced in the same way from map pictures by Wikimedia Commons contributors. For each picture we traced the area that it marks for one side, and we made the outline simpler.</p>
+    <ul>
+      <li>Yemen, the area held by the Houthi movement: <a href="https://commons.wikimedia.org/wiki/File:Yemeni_Civil_War.svg" rel="noopener">Yemeni Civil War.svg</a> by Ali Zifan and other contributors, CC BY-SA 4.0. Versions of March 2019 and February 2024.</li>
+      <li>Somalia, the area held by al-Shabaab: <a href="https://commons.wikimedia.org/wiki/File:Somali_Civil_War_(2009-present).svg" rel="noopener">Somali Civil War (2009-present).svg</a> by Ali Zifan and other contributors, CC BY-SA 4.0. Version of August 2024.</li>
+      <li>Sudan, the area held by the Rapid Support Forces: <a href="https://commons.wikimedia.org/wiki/File:War_in_Sudan_(2023).svg" rel="noopener">War in Sudan (2023).svg</a> by ElijahPepe and other contributors, CC BY-SA 4.0. Version of December 2024.</li>
+      <li>Myanmar, the area not held by the army: <a href="https://commons.wikimedia.org/wiki/File:Myanmar_civil_war.svg" rel="noopener">Myanmar civil war.svg</a> by Ecrusized and other contributors, CC0. Version of December 2024.</li>
+      <li>Burkina Faso, the area held by armed Islamist groups: <a href="https://commons.wikimedia.org/wiki/File:Jihadist_Insurgency_in_Burkina_Faso.svg" rel="noopener">Jihadist Insurgency in Burkina Faso.svg</a> by HetmanTheResearcher and other contributors, CC BY-SA 4.0. Version of November 2024, which shows October 2024.</li>
+      <li>The Democratic Republic of the Congo, the area held by M23: <a href="https://commons.wikimedia.org/wiki/File:M23_Offensive_Map.svg" rel="noopener">M23 Offensive Map.svg</a> by MrBLOCKiron and other contributors, CC0. Version of December 2024.</li>
+      <li>The Central African Republic, the areas held by rebel groups and other armed groups: <a href="https://commons.wikimedia.org/wiki/File:War_in_Central_African_Republic.svg" rel="noopener">War in Central African Republic.svg</a> by Borysk5 and other contributors, CC BY-SA 4.0. Version of November 2024.</li>
+      <li>Bhutan, the areas that China claims: <a href="https://commons.wikimedia.org/wiki/File:Bhutan_china_dispute.jpg" rel="noopener">Bhutan china dispute.jpg</a> by Nilesh shukla and other contributors, CC BY-SA 4.0. Version of August 2017. This picture is a small sketch, so these shapes are rough.</li>
+    </ul>
+    <p>Limits of these shapes. A front line moves, but each shape shows one month, and the map uses it for a block of up to five years. The note in the popup names the month. The edge is an estimate, about 5 km. Where we found no map picture that we can use for a block of years, nothing is hatched, and the popup of the country has the note. We share the shapes traced from CC BY-SA pictures under the same licence, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>. The north of Mali in 2012 is not traced: it is the three regions Timbuktu, Gao and Kidal from Natural Earth.</p>
+
+    <h2 id="cliwoc">CLIWOC</h2>
+    <p>The ship lanes of 1750 to 1824 are made from CLIWOC, the Climatological Database for the World's Oceans: the daily positions that officers wrote in the logbooks of British, Dutch, French and Spanish ships. We use release 2.1 from the data archive PANGAEA: Jones, Philip D; Wheeler, Dennis A; Können, Gunther P; Koek, Frits B; Prieto, Maria del Rosario; García-Herrera, Ricardo (2007): Climatological observations from ship logbooks between 1750 and 1854 (release 2.1). PANGAEA, <a href="https://doi.org/10.1594/PANGAEA.611088" rel="noopener">https://doi.org/10.1594/PANGAEA.611088</a>. Its licence is <a href="https://creativecommons.org/licenses/by/3.0/" rel="noopener">CC BY 3.0</a>. We changed the data: we used only the dates and the positions, and we made bands from them. See <a href="#lanes">Ship lanes</a>.</p>
+
+    <h2 id="icoads">ICOADS</h2>
+    <p>The ship lanes of 1825 to 2024 are made from <a href="https://www.ncei.noaa.gov/products/international-comprehensive-ocean-atmosphere-data-set" rel="noopener">ICOADS, the International Comprehensive Ocean-Atmosphere Data Set</a> of NOAA, the weather and ocean agency of the United States. NOAA says that these products are freely distributed worldwide. We use the “standard” monthly summaries in squares of 2 degrees, which keep to reports from ships as nearly as practical: the file <a href="https://downloads.psl.noaa.gov/Datasets/icoads/2degree/std/" rel="noopener">wspd.nobs.nc</a>, the number of wind reports in each square for each month. The data is provided by the NOAA PSL, Boulder, Colorado, USA, from their website at <a href="https://psl.noaa.gov" rel="noopener">https://psl.noaa.gov</a>. We changed the data: we added the months of each period, and we made bands from the sums. See <a href="#lanes">Ship lanes</a>.</p>
+
+    <h2 id="nasa">NASA</h2>
+    <p>The water of the Aral Sea in the years 2000 to 2018 is traced from pictures of <a href="https://science.nasa.gov/earth/earth-observatory/world-of-change/aral-sea/" rel="noopener">NASA Earth Observatory, “World of Change: Shrinking Aral Sea”</a>, one picture for each August. Image credit: NASA Earth Observatory. The edge of the traced water is an estimate, about 3 km. The shape of 1960 comes from Natural Earth. The map shows it for all earlier years, as an estimate. The map has no shape for 1961 to 1999 yet, so it shows the shape of 1960 in those years too, and the popup says so. From 2019 the map shows the shape of 2018. The traced shapes are in the <a href="cases.html#areas">list of shapes made for this map</a>.</p>
+    <p>The water of Dead Kultuk and the Kaydak Inlet, two bays in the north-east of the Caspian Sea, is traced from satellite pictures of the years 2000 to 2024. The pictures come from <a href="https://www.earthdata.nasa.gov/engage/open-data-services-software/earthdata-developer-portal/gibs-api" rel="noopener">NASA Global Imagery Browse Services (GIBS)</a>, from the Terra satellite. Image credit: NASA Global Imagery Browse Services (GIBS). The edge of the traced water is an estimate, about 1 km. For the years before 2000 the map has no picture, so it shows the shape of 2000 in the years in which written sources say the bays held water. That is an estimate too. The traced shapes are in the <a href="cases.html#areas">list of shapes made for this map</a>.</p>
+
+    <h2>MapLibre GL JS and PMTiles</h2>
+    <p>The map is drawn with <a href="https://maplibre.org/" rel="noopener">MapLibre GL JS</a>. Map files are read with <a href="https://github.com/protomaps/PMTiles" rel="noopener">PMTiles</a>. Both use the BSD-3-Clause licence.</p>
+  </article>
+</body>
+</html>

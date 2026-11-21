@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>The World in Motion</title>
+  <link rel="stylesheet" href="vendor/maplibre-gl.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="vendor/maplibre-gl.js"></script>
+  <script src="vendor/pmtiles.js"></script>
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <main id="map" aria-label="World map"></main>
+  <div id="drawers">
+  <details id="find" class="panel drawer" name="drawer">
+    <summary><span>Find</span></summary>
+    <section class="drawer-body">
+      <fieldset class="tabs" aria-label="What to find">
+        <label><input type="radio" name="find-tab" id="tab-search"><span>Search</span></label>
+        <label><input type="radio" name="find-tab" id="tab-lists"><span>Lists</span></label>
+        <label><input type="radio" name="find-tab" id="tab-maps" checked><span>Shows</span></label>
+      </fieldset>
+      <div id="pane-search">
+        <div id="search"></div>
+      </div>
+      <div id="pane-lists">
+        <div id="topics" hidden>
+          <label class="t-country">List for <select id="country"></select></label>
+          <h2 id="own-head"></h2>
+          <ul id="own-list" class="t-list"></ul>
+          <h2 id="world-head">World history</h2>
+          <ul id="world-list" class="t-list"></ul>
+        </div>
+      </div>
+      <div id="pane-maps">
+        <ul id="shows" class="t-list">
+          <li><button type="button" class="t-row" data-show="-" aria-pressed="true"><b>All history</b><small>Press ▶ at the timeline to play it</small></button></li>
+          <li><button type="button" class="t-row" data-show="lanes" aria-pressed="false"><b>Ship lanes and cables</b></button></li>
+        </ul>
+        <p class="map-note">The other shows use the detail level Full.</p>
+        <div class="theme-key" id="theme-key" hidden>
+          <label class="map-shows" id="theme-group-row" hidden>Group <select id="theme-group"></select></label>
+          <p class="theme-title" id="theme-title"></p>
+          <p class="legend" id="theme-steps"></p>
+          <p class="theme-count"><span id="theme-count"></span> <a href="sources.html#religion">About this map</a></p>
+        </div>
+      </div>
+    </section>
+  </details>
+  <details id="help" class="panel drawer" name="drawer">
+    <summary><span>Help</span></summary>
+    <section class="drawer-body help">
+      <h2>How to use this map</h2>
+      <ul>
+        <li><b>The year.</b> The map shows the world in one year. The year is in the box at the bottom. Move the slider to change the year. Press ‹ or › to go one year back or forward. You can also type a year, for example "500 BCE".</li>
+        <li><b>Play.</b> Press ▶ and the years run. The names above the timeline are events of that time. Click a name to see the event.</li>
+        <li><b>The map.</b> Drag the map to move it. Press + or − to zoom. Click a country to read about it.</li>
+        <li><b>Find.</b> "Search" finds a place, an empire or a topic by its name. "Lists" has topics from school. "Shows" has maps of one subject, for example religion.</li>
+        <li><b>One thing at a time.</b> When you pick a thing in "Find", the map goes to the first year that has it. Only that thing has its colours. The rest of the map is grey.</li>
+        <li><b>Clear.</b> The button "Clear" at the timeline puts the map back to the start.</li>
+        <li><b>Details.</b> Choose how much the map shows: Simple, More or Full.</li>
+      </ul>
+      <h2>How sure is the map?</h2>
+      <p>Old borders are not exact. A dashed line is an estimate. A full line is a surveyed border. An area with stripes is disputed: more than one side says that it owns the area.</p>
+      <h2>More to read</h2>
+      <ul>
+        <li><a href="sources.html">The sources of the map, and what we changed</a></li>
+        <li><a href="cases.html">The list of cases: each change, with its source</a></li>
+      </ul>
+    </section>
+  </details>
+  <details id="details" class="panel drawer" name="drawer">
+    <summary><span>Details <b id="level-name">Simple</b></span></summary>
+    <section class="drawer-body">
+      <fieldset class="tabs" aria-label="What this panel shows">
+        <label><input type="radio" name="tab" id="tab-map" checked><span>Map</span></label>
+        <label><input type="radio" name="tab" id="tab-sources"><span>Sources</span></label>
+      </fieldset>
+      <div id="pane-map">
+        <fieldset id="level" class="level">
+          <legend>Detail</legend>
+          <label><input type="radio" name="level" value="0" checked><span>Simple</span></label>
+          <label><input type="radio" name="level" value="1"><span>More</span></label>
+          <label><input type="radio" name="level" value="2"><span>Full</span></label>
+        </fieldset>
+        <label class="today-label"><input type="checkbox" role="switch" id="today-switch"> Today's borders</label>
+        <p class="legend">
+          <span class="key"><i class="k-solid"></i>surveyed</span>
+          <span class="key"><i class="k-dash"></i>estimate</span>
+          <span class="key"><i class="k-hatch"></i>disputed</span>
+          <span class="key"><i class="k-cross"></i>contested</span>
+          <span class="key" id="key-cable" hidden><i class="k-cable"></i>undersea cables (examples)</span>
+          <span class="key" id="key-lane" hidden><i class="k-lane"></i><span id="key-lane-text">ship lanes</span></span>
+        </p>
+      </div>
+      <div id="pane-sources">
+        <ul class="credits">
+          <li>Borders: <a href="sources.html#cliopatria">Cliopatria</a>, CC BY 4.0, changed.</li>
+          <li>Land, water, mountains and today's borders: Natural Earth.</li>
+          <li>Ship lanes: <a href="sources.html#cliwoc">CLIWOC</a>, CC BY 3.0, changed; and <a href="sources.html#icoads">ICOADS</a>, from NOAA.</li>
+          <li>Undersea cables: a list made for this map.</li>
+        </ul>
+        <p><a href="sources.html">All sources, and what we changed</a></p>
+      </div>
+    </section>
+  </details>
+  </div>
+  <div id="timeline" class="panel"></div>
+  <div id="error" class="panel" role="alert" hidden></div>
+</body>
+</html>
