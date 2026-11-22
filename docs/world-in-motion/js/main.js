@@ -1,5 +1,6 @@
 import { clampYear, formatSpan, formatYear, lifeScale, mapYear, DATA_YEAR, MIN_YEAR, WHOLE_SCALE } from "./year.js";
 import * as S from "./mapstyle.js";
+import { MapFile } from "./mapfile.js";
 import { createTimeline } from "./timeline.js";
 import { readState, writeState } from "./urlstate.js";
 import { memberAt, cityEntries } from "./search.js";
@@ -56,9 +57,15 @@ function forget(...keys) {
 const forgetSource = (id) => forget(...[...failed].filter((k) => k === id || k.startsWith(id + "/")));
 
 // PMTiles remembers a failed archive header; a new Protocol forgets it.
+// Each map file is a MapFile: it can load whole when the server cannot send parts (mapfile.js).
 function useFreshProtocol() {
+  const protocol = new pmtiles.Protocol();
   maplibregl.removeProtocol("pmtiles");
-  maplibregl.addProtocol("pmtiles", new pmtiles.Protocol().tile);
+  maplibregl.addProtocol("pmtiles", (request, abort) => {
+    const url = request.url.slice("pmtiles://".length).replace(/\/\d+\/\d+\/\d+$/, ""); // a tile has /z/x/y after the file
+    if (!protocol.tiles.has(url)) protocol.add(new pmtiles.PMTiles(new MapFile(url, new pmtiles.FetchSource(url))));
+    return protocol.tile(request, abort);
+  });
 }
 
 // Drop every band and base tile and ask again (a failed tile is not retried by itself until the map moves).
