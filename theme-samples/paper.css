@@ -1,0 +1,41 @@
+/* Paper: warm editorial serif. Matches partner-with-ai.html. */
+:root {
+  color-scheme: light dark;
+  --bg: #fbfaf8; --fg: #23201d; --muted: #6b645d; --rule: #e2ddd6;
+  --link: #9a5b2c; --panel: #fff;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #171614; --fg: #e7e3dd; --muted: #a49c93; --rule: #322e2a; --link: #e0a375; --panel: #1e1c1a; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 1.0625rem/1.65 Charter, "Iowan Old Style", Georgia, serif; }
+.skip { position: absolute; left: -999px; }
+.skip:focus { left: 1rem; top: 1rem; background: var(--panel); padding: .5rem 1rem; }
+a { color: var(--link); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--link); outline-offset: 3px; }
+header.site, main, footer.site { max-width: 46rem; margin: 0 auto; padding: 0 1.25rem; }
+header.site { padding-top: 3rem; text-align: center; }
+.name { font-size: clamp(1.8rem, 5vw, 2.4rem); color: var(--fg); text-decoration: none; letter-spacing: -.01em; }
+.tagline { margin: .25rem 0 1.5rem; color: var(--muted); font-style: italic; }
+nav ul { list-style: none; margin: 0; padding: .9rem 0; border-block: 1px solid var(--rule); display: flex; flex-wrap: wrap; justify-content: center; gap: .25rem 1.25rem; }
+nav a { color: var(--muted); text-decoration: none; font-variant: small-caps; letter-spacing: .05em; font-size: 1.05rem; }
+nav a:hover, nav a[aria-current] { color: var(--fg); text-decoration: underline; }
+main { padding-block: 2.5rem; }
+h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 1rem; }
+h2 { font-size: 1.35rem; margin: 2.5rem 0 1rem; padding-bottom: .3rem; border-bottom: 1px solid var(--rule); }
+h3 { font-size: 1.1rem; margin: 0 0 .4rem; }
+.lede { font-size: 1.15rem; font-style: italic; color: var(--muted); }
+.intro { display: flex; gap: 1.5rem; align-items: flex-start; }
+.portrait { border-radius: 50%; flex: none; }
+@media (max-width: 34rem) { .intro { flex-direction: column; align-items: center; text-align: center; } }
+.button { display: inline-block; padding: .4rem 1rem; border: 1px solid var(--link); border-radius: 2rem; text-decoration: none; margin: .25rem .25rem 0 0; }
+.button:hover { background: var(--link); color: var(--bg); }
+.books { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); gap: 1.25rem; }
+.books img { width: 100%; height: auto; display: block; box-shadow: 0 2px 8px rgb(0 0 0 / .18); transition: transform .2s; }
+.books a:hover img { transform: translateY(-4px); }
+.cards { list-style: none; padding: 0; margin: 0; }
+.card { padding: 1rem 0; border-bottom: 1px dotted var(--rule); }
+.card p, .feature p { margin: 0; }
+footer.site { padding-block: 2rem 3rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: .9rem; text-align: center; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
